@@ -142,9 +142,10 @@ Setup Instructions
 
 6.  **Access the application**:
    ```sh
-    $ kubectl port-forward your-pod-name  8080:5000
+       $ kubectl port-forward your-pod-name  8080:5000
    ```
-    ![image](https://github.com/Harshdupare/Iris-classification-model-deployment/assets/114917629/0531af0d-e474-410a-911b-aa6cd151768c)
+   ![image](https://github.com/Harshdupare/Iris-classification-model-deployment/assets/114917629/934a5a61-9907-4b5e-9bbd-e731c3d29ee6)
+
 
 7. **output**:
    ![image](https://github.com/Harshdupare/Iris-classification-model-deployment/assets/114917629/6b2afdc7-d59f-4636-8737-2fef865417ad)
