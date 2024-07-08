@@ -14,7 +14,6 @@ Tech Stack
 -   Scikit-learn (for ML model)
 -   Docker
 -   Kubernetes
--   Helm (optional for Kubernetes deployment)
 
 Setup Instructions
 ------------------
@@ -23,147 +22,136 @@ Setup Instructions
 
 1.  **Clone the repository**:
 
-    bash
-
-    Copy code
-
-    `git clone https://github.com/your-repo/ml-flask-docker-k8s.git
-    cd ml-flask-docker-k8s`
+   ```sh
+    git clone https://github.com/your-repo/ml-flask-docker-k8s.git
+    cd ml-flask-docker-k8s
+   ```
 
 2.  **Create a virtual environment and install dependencies**:
 
-    bash
-
-    Copy code
-
-    `python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt`
+     ```sh
+         python3 -m venv venv
+         source venv/bin/activate
+         pip install -r requirements.txt
+    ```
 
 3.  **Run the Flask app**:
 
-    bash
+    ```sh
+    python app.py
+    ```
 
-    Copy code
-
-    `python app.py`
-
-4.  **Test the API endpoint**:
-
-    bash
-
-    Copy code
-
-    `http://127.0.0.1:5000/predict`
+5.  **Test the API endpoint**:
+    ```
+    http://127.0.0.1:5000/predict
+    ```
 
 ### Dockerization
 
 1.  **Write a Dockerfile to containerize the Flask application**:
 
-    Dockerfile
+     ```sh
 
-    Copy code
-
-    `FROM python:3.9
-
-    WORKDIR /app 
-
-    COPY . /app
-
-    RUN pip install -r requirements.txt
-
-    EXPOSE 5000
-
-    CMD python ./index.py`
-
+        FROM python:3.9
+    
+        WORKDIR /app 
+    
+        COPY . /app
+    
+        RUN pip install -r requirements.txt
+    
+        EXPOSE 5000
+    
+        CMD python ./index.py
+    ```
 2.  **Build the Docker image**:
 
-    bash
-
-    Copy code
-
-    `docker build -t ml-flask-app .`
-
+   ```sh
+        docker build -t iris .
+   ```
 3.  **Run the Docker container locally**:
 
-    bash
-
-    Copy code
-
-    `docker run -p 5000:5000 ml-flask-app`
-
+    ```sh
+        docker run -d -p 5000:5000 iris
+    ```
+4. **Create a repository in docker hub and push the image**:
+   ```sh
+       docker tag iris your-docker-username/iris:latest
+   ```
+   ```sh
+      docker push your-docker-username/iris:latest
+   ```
 ### Kubernetes Setup
 
 1.  **Set up a local Kubernetes cluster using Minikube**:
 
-    bash
+     ```sh
+        minikube start
+     ```
 
-    Copy code
-
-    `minikube start`
-
-2.  **Write Kubernetes deployment and service YAML files**:
+3.  **Write Kubernetes deployment and service YAML files**:
 
     `iris.yaml`:
 
-    yaml
-
-    Copy code
-
-    `apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-    name: irisapp
-    spec:
-    selector:
-        matchLabels:
-        app: irisapp
-    template:
+    
+   ```sh
+        apiVersion: apps/v1
+        kind: Deployment
         metadata:
-        labels:
-            app: irisapp
+        name: irisapp
         spec:
-        containers:
-        - name: iris
-            image: harshdupare/irisclass:v1.0
-            resources:
-            limits:
-                memory: "128Mi"
-                cpu: "500m"
-            ports:
-            - containerPort: 5000`
-    ---
+        selector:
+            matchLabels:
+            app: irisapp
+        template:
+            metadata:
+            labels:
+                app: irisapp
+            spec:
+            containers:
+            - name: iris
+                image: replace your image name from doker registry (example :->harshdupare/irisclass:v1.0)
+                resources:
+                limits:
+                    memory: "128Mi"
+                    cpu: "500m"
+                ports:
+                - containerPort: 5000
+        ---
+    
+        apiVersion: v1
+        kind: Service
+        metadata:
+        name: irisapp-service
+        spec:
+        selector:
+            app: irisapp
+        ports:
+            - protocol: TCP
+            port: 80
+            targetPort: 5000
+            nodePort: 30000
+        type: NodePort
+   ```
 
-    `apiVersion: v1
-    kind: Service
-    metadata:
-    name: irisapp-service
-    spec:
-    selector:
-        app: irisapp
-    ports:
-        - protocol: TCP
-        port: 80
-        targetPort: 5000
-        nodePort: 30000
-    type: NodePort`
+4.  **Deploy the Dockerized application on the Kubernetes cluster**:
 
-3.  **Deploy the Dockerized application on the Kubernetes cluster**:
+   ```sh
+    kubectl apply -f iris.yaml
+   ```
 
-    bash
+6.  **Access the application**:
+   ```sh
+       $ kubectl port-forward your-pod-name  8080:5000
+   ```
+   ![image](https://github.com/Harshdupare/Iris-classification-model-deployment/assets/114917629/934a5a61-9907-4b5e-9bbd-e731c3d29ee6)
 
-    Copy code
 
-    `kubectl apply -f iris.yaml`
+7. **output**:
 
-4.  **Access the application**:
+   ![image](https://github.com/Harshdupare/Iris-classification-model-deployment/assets/114917629/6b2afdc7-d59f-4636-8737-2fef865417ad)
 
-    bash
-
-    Copy code
-
-    `minikube service ml-flask-app`
-
+   
 Conclusion
 ----------
 
