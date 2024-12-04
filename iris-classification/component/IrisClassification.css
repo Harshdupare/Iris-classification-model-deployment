@@ -1,0 +1,65 @@
+/* Overall container styling */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7fa; /* Light background color */
+  }
+  
+  /* Paper component - the form container */
+  .MuiPaper-root {
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  /* Styling the Typography (title) */
+  .MuiTypography-h4 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  /* Styling for TextField components */
+  .MuiTextField-root {
+    margin-bottom: 16px; /* Space between input fields */
+  }
+  
+  /* Button styling */
+  .MuiButton-root {
+    margin-top: 16px; /* Space above the submit button */
+    background-color: #1976d2;
+    color: white;
+    &:hover {
+      background-color: #1565c0; /* Darken on hover */
+    }
+  }
+  
+  /* Styling for the result text */
+  .MuiTypography-h6 {
+    text-align: center;
+    font-weight: 500;
+    margin-top: 16px;
+    color: #4caf50; /* Green color for the prediction result */
+  }
+  
+  /* Snackbar styling for error messages */
+  .MuiSnackbar-root {
+    z-index: 1500; /* Ensure the snackbar appears above other content */
+  }
+  
+  .MuiAlert-root {
+    background-color: #f44336; /* Red background for errors */
+    color: white;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+  
+  .flower{
+    position: relative;
+    left: 100px;
+  }
